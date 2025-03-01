@@ -28,7 +28,7 @@ void Contexts::Init()
 		}
 
 		const auto path{ a.path().string() };
-		const auto id{ Util::Lower(a.path().filename().replace_extension().string()) };
+		const auto id{ Utility::CastLowera.path().filename().replace_extension().string()) };
 		
 		try {
 			const auto t1 = std::chrono::high_resolution_clock::now();

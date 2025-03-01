@@ -1,8 +1,9 @@
 #include "Outfits.h"
-#include "Util.h"
-#include "Events.h"
 #include "Devices.h"
+#include "Events.h"
 #include "Packs.h"
+#include "Util.h"
+#include "Utility/Random.h"
 
 using namespace Adversity;
 
@@ -41,7 +42,7 @@ void Outfits::Reload(std::string a_context, std::string a_pack, std::string a_na
 
 	logger::info("{}/{}/{} file - {}", a_context, a_pack, a_name, file);
 
-	const std::string id{ std::format("{}/{}", a_context, Util::Lower(a_name)) };
+	const std::string id{ std::format("{}/{}", a_context, Utility::CastLowera_name)) };
 	auto config = YAML::LoadFile(file);
 	Load(id, config.as<Outfit>());
 }
@@ -54,19 +55,19 @@ Outfit* Outfits::GetOutfit(std::string a_context, std::string a_name)
 
 Outfit* Outfits::GetOutfit(std::string a_id)
 {
-	a_id = Util::Lower(a_id);
+	a_id = Utility::CastLowera_id);
 	return _outfits.count(a_id) ? &_outfits[a_id] : nullptr;
 }
 
 Variant* Outfits::GetVariant(std::string a_id)
 {
-	a_id = Util::Lower(a_id);
+	a_id = Utility::CastLowera_id);
 	return _variants.count(a_id) ? &_variants[a_id] : nullptr;
 }
 
 Variant* Outfits::GetNextOutfit(std::string a_variant, int a_targetSeverity)
 {
-	a_variant = Util::Lower(a_variant);
+	a_variant = Utility::CastLowera_variant);
 
 	logger::info("GetNextOutfit - {}", a_variant);
 
@@ -85,9 +86,9 @@ Variant* Outfits::GetNextOutfit(std::string a_variant, int a_targetSeverity)
 
 		std::vector<Variant*> candidates;
 
-		auto splits = Util::Split(a_variant, "/");
+		auto splits = Utility::StringSplit(a_variant, "/");
 		splits.pop_back();
-		if (const auto outfit = GetOutfit(Util::Join(splits, "/"))) {
+		if (const auto outfit = GetOutfit(Utility::StringJoin(splits, "/"))) {
 			for (auto& var : outfit->variants) {
 				if (var.severity == a_targetSeverity) {
 					for (const auto& seq : var.sequence) {
@@ -104,7 +105,7 @@ Variant* Outfits::GetNextOutfit(std::string a_variant, int a_targetSeverity)
 		if (candidates.empty())
 			return nullptr;
 
-		return candidates[Util::Random(0, candidates.size() - 1)];
+		return candidates[Utility::Random::draw<size_t>(0, candidates.size() - 1)];
 	}
 
 	return nullptr;
@@ -205,7 +206,7 @@ bool Outfits::AddVariant(std::string a_context, std::string a_pack, std::string 
 
 			if (data->IsWorn()) {
 				if (const auto& armo = item->As<RE::TESObjectARMO>()) {
-					logger::info("found armo: {} {} {}", armo->GetFormEditorID(), armo->GetName(), Util::GetFormIDString(armo));
+					logger::info("found armo: {} {} {}", armo->GetFormEditorID(), armo->GetName(), Utility::FormToString(armo));
 
 					if (armo->HasKeywordString("SOS_Genitals") || armo->HasKeywordString("SOS_PubicHair")) {
 						continue;
@@ -228,7 +229,7 @@ bool Outfits::AddVariant(std::string a_context, std::string a_pack, std::string 
 		for (const auto& armo : worn) {
 			YAML::Node piece;
 			piece["name"] = armo->GetName();
-			piece["id"] = Util::GetFormIDString(armo);
+			piece["id"] = Utility::FormToString(armo);
 			variantNode["pieces"].push_back(piece);
 		}
 

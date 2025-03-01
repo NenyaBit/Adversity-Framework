@@ -45,7 +45,7 @@ end
 -- Target
 target(PROJECT_NAME)
     -- Dependencies
-    add_packages("magic_enum", "nlohmann_json", "yaml-cpp", "srell")
+    add_packages("spdlog", "magic_enum", "nlohmann_json", "yaml-cpp", "srell")
 
     -- CommonLibSSE
     add_deps("commonlibsse-ng")

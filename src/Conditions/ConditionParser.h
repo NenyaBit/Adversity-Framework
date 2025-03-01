@@ -1,7 +1,5 @@
 #pragma once
 
-#include "ConditionUtil.h"
-
 // stolen from DAV (https://github.com/Exit-9B/DynamicArmorVariants)
 namespace Conditions
 {
@@ -44,13 +42,18 @@ namespace Conditions
 			refMap["PLAYER"] = RE::PlayerCharacter::GetSingleton();
 
 			for (const auto& [key, value] : a_rawRefs) {
-				if (const auto form = ConditionUtil::GetFormFromString(value)) {
+				const auto form = Utility::FormFromString<RE::TESForm*>(value);
+				if (!form) {
+					logger::warn("Failed to parse form for key: {}"sv, key);
+					continue;
+				} else {
 					refMap[key] = form;
 				}
 			}
 
 			return refMap;
 		}
+
 	private:
 		union ConditionParam
 		{
@@ -72,8 +75,7 @@ namespace Conditions
 			if (auto it = a_refs.find(a_text); it != a_refs.end()) {
 				return it->second->As<T>();
 			}
-
-			return ConditionUtil::GetFormFromString<T>(a_text);
+			return Utility::FormFromString<T>(a_text);
 		}
 
 		static std::unordered_map<std::string, std::shared_ptr<RE::TESCondition>> _conditionSets;

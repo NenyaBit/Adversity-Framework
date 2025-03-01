@@ -16,7 +16,7 @@ void Packs::Load(std::string a_context)
 			continue;
 		}
 
-		const auto packName { Util::Lower(a.path().filename().replace_extension().string()) };
+		const auto packName { Utility::CastLowera.path().filename().replace_extension().string()) };
 		const auto id{ a_context + '/' + packName };
 		
 		try {
@@ -58,14 +58,14 @@ void Packs::Reload(std::string a_context)
 
 
 Pack* Packs::GetById(std::string a_pack) {
-	const std::string id{ Util::Lower(a_pack) };
+	const std::string id{ Utility::CastLowera_pack) };
 	logger::info("Packs::GetById: {} - {}", a_pack, _packs.count(id));
 	return _packs.count(id) ? &_packs[id] : nullptr;
 }
 
 std::vector<Pack*> Packs::GetByContext(std::string a_context)
 {
-	return _contexts[Util::Lower(a_context)];
+	return _contexts[Utility::CastLowera_context)];
 }
 
 std::vector<std::string> Packs::GetIds(std::vector<Pack*> a_packs)

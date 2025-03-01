@@ -33,7 +33,7 @@ void Actors::Load(std::string a_context)
 			continue;
 		}
 
-		const auto id{ Util::Lower(a.path().filename().replace_extension().string()) };
+		const auto id{ Utility::CastLowera.path().filename().replace_extension().string()) };
 
 		try {
 			const auto path{ a.path().string() };

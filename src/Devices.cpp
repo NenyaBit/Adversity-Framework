@@ -39,12 +39,12 @@ void Devices::Load(std::string a_context)
 		std::ifstream file(path);
 		auto data = json::parse(file);
 		for (auto& [key, node] : data.items()) {
-			auto field = Util::Lower(key);
+			auto field = Utility::CastLowerkey);
 			if (field == "sets") {
 				const auto sets = node.template get<std::vector<std::string>>();
 				_sets[a_context].reserve(sets.size());
 				std::transform(sets.begin(), sets.end(), std::back_inserter(_sets[a_context]), [](std::string a_str) {
-					return Util::Lower(a_str);
+					return Utility::CastLowera_str);
 				});
 			} else if (field.starts_with("zad_")) {
 
@@ -92,7 +92,7 @@ std::vector<RE::TESObjectARMO*> Devices::GetDevicesByKeyword(std::string a_conte
 				const std::string name{ armor->GetName() };
 				
 				for (const auto& set : sets) {
-					if (Util::Lower(name).starts_with(set)) {
+					if (Utility::CastLowername).starts_with(set)) {
 						hasSets.insert(set);
 
 						if (entry->IsWorn()) {
@@ -103,7 +103,7 @@ std::vector<RE::TESObjectARMO*> Devices::GetDevicesByKeyword(std::string a_conte
 			} else if (armor->HasKeyword(_lockableKwd)) { // rendered device
 				for (const auto& kwd : armor->GetKeywords()) {
 					std::string name{ kwd->GetFormEditorID() };
-					if (Util::Lower(name).starts_with("zad_devious")) {
+					if (Utility::CastLowername).starts_with("zad_devious")) {
 						seenKwds.insert(kwd);
 					}
 				}
@@ -119,7 +119,7 @@ std::vector<RE::TESObjectARMO*> Devices::GetDevicesByKeyword(std::string a_conte
 	std::vector<RE::TESObjectARMO*> filteredByHasSets;
 
 	const auto& deviceMap = _devices.count(a_context) ? _devices[a_context] : _devices["default"];
-	const std::string kwdName{ Util::Lower(a_kwd->GetFormEditorID()) };
+	const std::string kwdName{ Utility::CastLowera_kwd->GetFormEditorID()) };
 	
 	if (deviceMap.count(kwdName)) {
 		const auto& [_, devicesList] = *deviceMap.find(kwdName);
@@ -139,7 +139,7 @@ std::vector<RE::TESObjectARMO*> Devices::GetDevicesByKeyword(std::string a_conte
 				valid.push_back(device.armo);
 
 				for (const auto& set : sets) {
-					if (Util::Lower(device.name).starts_with(set)) {
+					if (Utility::CastLowerdevice.name).starts_with(set)) {
 						filteredBySet.push_back(armo);
 
 						if (hasSets.contains(set)) {
@@ -175,7 +175,7 @@ std::vector<RE::TESObjectARMO*> Devices::GetDevicesByKeyword(std::string a_conte
 bool Devices::DeviceMatches(std::string a_name, std::vector<std::string> a_filters)
 {
 	for (const auto& cont : a_filters) {
-		if (Util::Lower(a_name).find(Util::Lower(cont)) != std::string::npos) {
+		if (Utility::CastLowera_name).find(Utility::CastLowercont)) != std::string::npos) {
 			return true;
 		}
 	}

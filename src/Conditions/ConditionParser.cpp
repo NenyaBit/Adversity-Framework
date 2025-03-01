@@ -7,9 +7,15 @@ using namespace Conditions;
 
 auto ConditionParser::Parse(std::string_view a_text, const RefMap& a_refs) -> RE::TESConditionItem*
 {
-	const auto splits = ConditionUtil::Split(std::string{ a_text }, "<>"sv) 
-		| std::ranges::views::transform([](std::string& a_str) { return ConditionUtil::trim(a_str); }) 
-		| std::ranges::to<std::vector>();
+	const auto splits = Utility::StringSplit(a_text, "<>"sv) | std::ranges::views::transform([](std::string& a_str) {
+		while (!a_str.empty() && std::isspace(a_str.front())) {
+			a_str.erase(a_str.begin());
+		}
+		while (!a_str.empty() && std::isspace(a_str.back())) {
+			a_str.pop_back();
+		}
+		return a_str;
+	}) | std::ranges::to<std::vector>();
 
 	const std::string text{ splits.size() == 2 ? splits[1] : splits[0] };
 	const std::string refStr{ splits.size() == 2 ? splits[0] : "" };
@@ -39,7 +45,7 @@ auto ConditionParser::Parse(std::string_view a_text, const RefMap& a_refs) -> RE
 		return nullptr;
 	}
 
-	auto functionIndex = ConditionUtil::to_underlying(function->output) - 0x1000;
+	auto functionIndex = std::to_underlying(function->output) - 0x1000;
 	data.functionData.function = static_cast<RE::FUNCTION_DATA::FunctionID>(functionIndex);
 
 	if (mParam1.matched) {
@@ -119,7 +125,9 @@ auto ConditionParser::ParseParam(
 {
 	ConditionParam param{};
 
-	auto textCIS = ConditionUtil::str_toupper(a_text);
+
+	auto textCIS = a_text;
+	Utility::ToUpper(textCIS);
 
 	switch (a_type) {
 	case RE::SCRIPT_PARAM_TYPE::kChar:
@@ -132,7 +140,7 @@ auto ConditionParser::ParseParam(
 		param.f = std::stof(textCIS);
 		break;
 	case RE::SCRIPT_PARAM_TYPE::kActorValue:
-		param.i = ConditionUtil::to_underlying(EnumLookup::LookupActorValue(textCIS));
+		param.i = std::to_underlying(EnumLookup::LookupActorValue(textCIS));
 		break;
 	case RE::SCRIPT_PARAM_TYPE::kAxis:
 		param.i = EnumLookup::LookupAxis(textCIS);
@@ -141,7 +149,7 @@ auto ConditionParser::ParseParam(
 		param.i = EnumLookup::LookupSex(textCIS);
 		break;
 	case RE::SCRIPT_PARAM_TYPE::kCastingSource:
-		param.i = ConditionUtil::to_underlying(EnumLookup::LookupCastingSource(textCIS));
+		param.i = std::to_underlying(EnumLookup::LookupCastingSource(textCIS));
 		break;
 
 	case RE::SCRIPT_PARAM_TYPE::kVMScriptVar:

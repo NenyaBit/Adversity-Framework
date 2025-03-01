@@ -119,7 +119,7 @@ namespace YAML
 		{
 			rhs.id = node["id"].as<std::string>();
 			rhs.name = node["name"].as<std::string>("");
-			rhs.armo = Util::GetFormFromString<RE::TESObjectARMO>(rhs.id);
+			rhs.armo = Utility::FormFromString<RE::TESObjectARMO*>(rhs.id);
 
 			if (rhs.armo) {
 				auto kwds = node["addKeywords"].as<std::vector<std::string>>(std::vector<std::string>{});

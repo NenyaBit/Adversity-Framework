@@ -39,7 +39,7 @@ namespace Adversity::Serialization
 	template <>
 	inline RE::TESForm* Read<RE::TESForm*>(SKSE::SerializationInterface* serde)
 	{
-		return Util::GetFormFromString(Read<std::string>(serde));
+		return Utility::FormFromString(Read<std::string>(serde));
 	}
 
 	template <class T>
@@ -92,6 +92,6 @@ namespace Adversity::Serialization
 
 	inline void Write(SKSE::SerializationInterface* serde, RE::TESForm* a_form)
 	{
-		Write(serde, Util::GetFormIDString(a_form));
+		Write(serde, Utility::FormToString(a_form));
 	}
 }

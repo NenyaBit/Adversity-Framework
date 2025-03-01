@@ -13,7 +13,7 @@ void Tattoos::Load(std::string a_context, std::string a_pack)
 std::vector<Group*> Tattoos::GetGroups(std::string a_context, std::string a_name)
 {
 	std::vector<Group*> groups;
-	const auto id{ Util::Lower(std::format("{}/{}", a_context, a_name)) };
+	const auto id{ Utility::CastLowerstd::format("{}/{}", a_context, a_name)) };
 	if (!_groups.count(id)) {
 		return groups;
 	}

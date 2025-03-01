@@ -1,37 +1,39 @@
 #pragma once
 
-#include <new>
-void* operator new[](size_t size, const char* pName, int flags, unsigned debugFlags, const char* file, int line);
-void* operator new[](size_t size, size_t alignment, size_t alignmentOffset, const char* pName, int flags,
-	unsigned debugFlags, const char* file, int line);
-
 #pragma warning(push)
-#if defined(FALLOUT4)
-#	include "F4SE/F4SE.h"
-#	include "RE/Fallout.h"
-#	define SKSE F4SE
-#	define SKSEAPI F4SEAPI
-#	define SKSEPlugin_Load F4SEPlugin_Load
-#	define SKSEPlugin_Query F4SEPlugin_Query
-#else
-#	define SKSE_SUPPORT_XBYAK
-#	include "RE/Skyrim.h"
-#	include "SKSE/SKSE.h"
-#	include <xbyak/xbyak.h>
-#endif
-
-#ifdef NDEBUG
-#	include <spdlog/sinks/basic_file_sink.h>
-#else
-#	include <spdlog/sinks/msvc_sink.h>
-#endif
-
+#pragma warning(disable : 4200)
+#include "RE/Skyrim.h"
+#include "SKSE/SKSE.h"
 #pragma warning(pop)
 
-#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
+#include <atomic>
+#include <string_view>
+#include <unordered_map>
+#include <unordered_set>
 
+#pragma warning(push)
+#include <spdlog/sinks/basic_file_sink.h>
+#include <spdlog/sinks/msvc_sink.h>
+#pragma warning(pop)
+
+#include "Util/FormLookup.h"
+#include "Util/Random.h"
+#include "Util/StringUtil.h"
+#include "Util/Script.h"
+
+#include <magic_enum.hpp>
+#include <nlohmann/json.hpp>
+#include <srell.hpp>
+#include <yaml-cpp/yaml.h>
+static_assert(magic_enum::is_magic_enum_supported, "magic_enum is not supported");
+
+using json = nlohmann::json;
+namespace logger = SKSE::log;
+namespace fs = std::filesystem;
 using namespace std::literals;
+
+#define REL_ID(se, ae) REL::RelocationID(se, ae)
+#define REL_OF(se, ae, vr) REL::VariantOffset(se, ae, vr)
 
 namespace stl
 {
@@ -82,116 +84,78 @@ namespace stl
 	}
 }
 
-namespace logger = SKSE::log;
-namespace WinAPI = SKSE::WinAPI;
-
-namespace util
-{
-	using SKSE::stl::report_and_fail;
-}
-
-#include "Plugin.h"
-
-#include <functional>
-#include <future>
-#include <vector>
-#include <random>
-
-#include <ClibUtil/distribution.hpp>
-#include <ClibUtil/editorID.hpp>
-#include <ClibUtil/numeric.hpp>
-#include <ClibUtil/rng.hpp>
-#include <ClibUtil/simpleINI.hpp>
-
-#include <nlohmann/json.hpp>
-using json = nlohmann::json;
-
-#include <yaml-cpp/yaml.h>
-
-#include <magic_enum.hpp>
-
-#include "SimpleMath.h"
-
-using uint = uint32_t;
-
-namespace fs = std::filesystem;
-
 namespace Adversity::Papyrus
 {
 
 #define CONTEXTCONFIG(name, type)                                                                                           \
 	inline type GetContext##name(RE::StaticFunctionTag*, std::string a_id, std::string a_key, type a_default, bool a_persist) \
-	{                                                                                                                       \
-		return Contexts::GetValue<type>(a_id, a_key, a_default, a_persist);                                                 \
-	}                                                                                                                       \
+	{                                                                                                                         \
+		return Contexts::GetValue<type>(a_id, a_key, a_default, a_persist);                                                     \
+	}                                                                                                                         \
 	inline bool SetContext##name(RE::StaticFunctionTag*, std::string a_id, std::string a_key, type a_val, bool a_persist)     \
+	{                                                                                                                         \
+		return Contexts::SetValue<type>(a_id, a_key, a_val, a_persist);                                                         \
+	}
+
+
+#define EVENTCONFIG(name, type)                                                                                           \
+	inline type GetEvent##name(RE::StaticFunctionTag*, std::string a_id, std::string a_key, type a_default, bool a_persist) \
 	{                                                                                                                       \
-		return Contexts::SetValue<type>(a_id, a_key, a_val, a_persist);                                                     \
-	} \
+		return Events::GetValue<type>(a_id, a_key, a_default, a_persist);                                                     \
+	}                                                                                                                       \
+	inline bool SetEvent##name(RE::StaticFunctionTag*, std::string a_id, std::string a_key, type a_val, bool a_persist)     \
+	{                                                                                                                       \
+		return Events::SetValue<type>(a_id, a_key, a_val, a_persist);                                                         \
+	}
 
-
-#define EVENTCONFIG(name, type)                                                                                                              \
-	inline type GetEvent##name(RE::StaticFunctionTag*, std::string a_id, std::string a_key, type a_default, bool a_persist)             \
-	{                                                                                                                               \
-		return Events::GetValue<type>(a_id, a_key, a_default, a_persist);                                                                     \
-	}                                                                                                                                            \
-	inline bool SetEvent##name(RE::StaticFunctionTag*, std::string a_id, std::string a_key, type a_val, bool a_persist) \
-	{                                                                                                                                            \
-		return Events::SetValue<type>(a_id, a_key, a_val, a_persist);                                                              \
-	} \
-
-#define ACTORCONFIG(name, type)                                                                                                 \
+#define ACTORCONFIG(name, type)                                                                                                    \
 	inline type GetActor##name(RE::StaticFunctionTag*, std::string a_context, RE::Actor* a_actor, std::string a_key, type a_default) \
-	{ \
-		return Actors::GetValue<type>(a_context, a_actor, a_key, a_default); \
-	} \
-	inline bool SetActor##name(RE::StaticFunctionTag*, std::string a_context, RE::Actor* a_actor, std::string a_key, type a_val) \
-	{ \
-		return Actors::SetValue<type>(a_context, a_actor, a_key, a_val); \
-	} \
+	{                                                                                                                                \
+		return Actors::GetValue<type>(a_context, a_actor, a_key, a_default);                                                           \
+	}                                                                                                                                \
+	inline bool SetActor##name(RE::StaticFunctionTag*, std::string a_context, RE::Actor* a_actor, std::string a_key, type a_val)     \
+	{                                                                                                                                \
+		return Actors::SetValue<type>(a_context, a_actor, a_key, a_val);                                                               \
+	}
 
-	
 
-#define CONFIGFUNCS(configType)\
-	configType(Bool, bool)\
-	configType(Int, int) \
-	configType(Float, float) \
-	configType(String, std::string) \
-	configType(Form, RE::TESForm*) \
-	configType(BoolList, std::vector<bool>)         \
-	configType(IntList, std::vector<int>)\
-	configType(FloatList, std::vector<float>)         \
-	configType(StringList, std::vector<std::string>)\
-	configType(FormList, std::vector<RE::TESForm*>)\
+#define CONFIGFUNCS(configType)                                                    \
+	configType(Bool, bool)                                                           \
+			configType(Int, int)                                                         \
+					configType(Float, float)                                                 \
+							configType(String, std::string)                                      \
+									configType(Form, RE::TESForm*)                                   \
+											configType(BoolList, std::vector<bool>)                      \
+													configType(IntList, std::vector<int>)                    \
+															configType(FloatList, std::vector<float>)            \
+																	configType(StringList, std::vector<std::string>) \
+																			configType(FormList, std::vector<RE::TESForm*>)
 
-	
-#define REGISTERCONFIG(configType)           \
-	configType(Bool)                         \
-		configType(Int)                      \
-			configType(Float)                \
-				configType(String)           \
-					configType(Form)         \
-						configType(BoolList)     \
-						configType(IntList)     \
-						configType(FloatList)     \
-						configType(StringList) \
-							configType(FormList)\
 
-#define REGISTERCONTEXT(name)      \
+#define REGISTERCONFIG(configType)                       \
+	configType(Bool)                                       \
+			configType(Int)                                    \
+					configType(Float)                              \
+							configType(String)                         \
+									configType(Form)                       \
+											configType(BoolList)               \
+													configType(IntList)            \
+															configType(FloatList)      \
+																	configType(StringList) \
+																			configType(FormList)
+
+#define REGISTERCONTEXT(name)    \
 	REGISTERFUNC(GetContext##name) \
-	REGISTERFUNC(SetContext##name)\
+	REGISTERFUNC(SetContext##name)
 
-#define REGISTEREVENT(name)      \
-		REGISTERFUNC(GetEvent##name) \
-			REGISTERFUNC(SetEvent##name)\
-
-
-#define REGISTERACTOR(name) \
-						REGISTERFUNC(GetActor##name)                                 \
-							REGISTERFUNC(SetActor##name)
+#define REGISTEREVENT(name)    \
+	REGISTERFUNC(GetEvent##name) \
+	REGISTERFUNC(SetEvent##name)
 
 
-
+#define REGISTERACTOR(name)    \
+	REGISTERFUNC(GetActor##name) \
+	REGISTERFUNC(SetActor##name)
 
 
 #define REGISTERFUNC(func) a_vm->RegisterFunction(#func##sv, "Adversity", func);
@@ -201,7 +165,5 @@ namespace Adversity::Papyrus
 	using VM = RE::BSScript::IVirtualMachine;
 	using StackID = RE::VMStackID;
 }
-
-#include <srell.hpp>
 
 #define DLLEXPORT __declspec(dllexport)

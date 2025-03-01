@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ConditionParser.h"
+#include "Utility/Script.h"
 
 namespace Conditions
 {
@@ -63,12 +64,12 @@ namespace Conditions
 			case RE::FUNCTION_DATA::FunctionID::kGetVMQuestVariable: {
 					const auto quest = std::bit_cast<RE::TESQuest*>(a_item->data.functionData.params[0]);
 					const auto scriptVar = std::bit_cast<RE::BSString*>(a_item->data.functionData.params[1]);
-					const auto splits = ConditionUtil::Split(std::string{ scriptVar->c_str() }, "::");
+					const auto splits = Utility::StringSplit(std::string{ scriptVar->c_str() }, "::");
 					const auto script = splits[0];
 					const auto var = splits[1];
 
-					if (const auto ptr = ConditionUtil::Script::GetScriptObject(quest, script.c_str())) {
-						value = (float)ConditionUtil::Script::GetNumProperty(ptr, var);
+					if (const auto ptr = Script::GetScriptObject(quest, script.c_str())) {
+						value = Script::GetTrivialProperty<float>(ptr, var);
 					}
 
 					break;

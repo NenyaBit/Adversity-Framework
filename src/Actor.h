@@ -37,7 +37,7 @@ namespace YAML
 	{
 		static bool decode(const Node& node, AttachedTrait& rhs)
 		{
-			rhs.id = Util::Lower(node["id"].as<std::string>());
+			rhs.id = Utility::CastLowernode["id"].as<std::string>());
 			rhs.rank = node["rank"].as<int8_t>(0);
 
 			return true;
@@ -60,7 +60,7 @@ namespace YAML
 		static bool decode(const Node& node, Actor& rhs)
 		{
 			const auto id = node["id"].as<std::string>("");
-			rhs._base = Util::GetFormFromString<RE::Actor>(id);
+			rhs._base = id.empty() ? nullptr : Utility::FormFromString<RE::Actor*>(id);
 			rhs._traits = node["traits"].as<std::vector<AttachedTrait>>(std::vector<AttachedTrait>{});
 			
 			rhs.Read(node["data"]);
