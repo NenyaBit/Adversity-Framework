@@ -1,0 +1,9 @@
+MutagenObjectType: GlobalShort
+FormKey: 000820:Adversity Framework.esm
+MajorRecordFlagsRaw: 64
+EditorID: Adv_Status_Disabled
+SkyrimMajorRecordFlags:
+- 0x40
+MajorFlags:
+- Constant
+Data: 0

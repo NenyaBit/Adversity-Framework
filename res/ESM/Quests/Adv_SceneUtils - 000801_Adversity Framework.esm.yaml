@@ -1,0 +1,18 @@
+FormKey: 000801:Adversity Framework.esm
+EditorID: Adv_SceneUtils
+VirtualMachineAdapter:
+  Scripts:
+  - Name: Adv_SceneUtils
+    Properties:
+    - MutagenObjectType: ScriptObjectProperty
+      Name: SceneTimeout
+      Object: 000803:Adversity Framework.esm
+  Versioning:
+  - Break0
+  ExtraBindDataVersion: 0
+  FileName: ''
+Flags:
+- StartGameEnabled
+- 0x10
+- RunOnce
+NextAliasID: 0

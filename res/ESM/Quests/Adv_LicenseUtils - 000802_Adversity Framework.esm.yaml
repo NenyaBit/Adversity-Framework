@@ -1,0 +1,38 @@
+FormKey: 000802:Adversity Framework.esm
+EditorID: Adv_LicenseUtils
+VirtualMachineAdapter:
+  Scripts:
+  - Name: Adv_InterfaceLicense_BMLE
+  - Name: Adv_InterfaceLicense_SLS
+  - Name: Adv_LicenseUtils
+    Properties:
+    - MutagenObjectType: ScriptObjectListProperty
+      Name: StatusGlobals
+      Objects:
+      - Name: ''
+        Object: 00080C:Adversity Framework.esm
+      - Name: ''
+        Object: 00080F:Adversity Framework.esm
+      - Name: ''
+        Object: 000811:Adversity Framework.esm
+      - Name: ''
+        Object: 000813:Adversity Framework.esm
+      - Name: ''
+        Object: 000817:Adversity Framework.esm
+      - Name: ''
+        Object: 000818:Adversity Framework.esm
+      - Name: ''
+        Object: 000819:Adversity Framework.esm
+      - Name: ''
+        Object: 00081A:Adversity Framework.esm
+      - Name: ''
+        Object: 00081F:Adversity Framework.esm
+  Versioning:
+  - Break0
+  ExtraBindDataVersion: 0
+  FileName: ''
+Flags:
+- StartGameEnabled
+- 0x10
+- RunOnce
+NextAliasID: 1

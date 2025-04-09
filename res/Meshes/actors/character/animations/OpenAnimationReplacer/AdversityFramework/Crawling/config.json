@@ -1,0 +1,34 @@
+{
+    "name": "Crawling",
+    "priority": 2140000300,
+    "conditions": [
+        {
+            "condition": "IsChild",
+            "requiredVersion": "1.0.0.0",
+            "negated": true
+        },
+        {
+            "condition": "IsWornHasKeyword",
+            "requiredVersion": "1.0.0.0",
+            "Keyword": {
+                "form": {
+                    "pluginName": "Adversity Framework.esm",
+                    "formID": "822"
+                }
+            }
+        },
+        {
+            "condition": "FactionRank",
+            "requiredVersion": "1.0.0.0",
+            "disabled": true,
+            "Faction": {
+                "pluginName": "Adversity Framework.esm",
+                "formID": "805"
+            },
+            "Comparison": "==",
+            "Numeric value": {
+                "value": 0.0
+            }
+        }
+    ]
+}

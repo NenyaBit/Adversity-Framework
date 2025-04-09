@@ -12,6 +12,9 @@ A framework for creating player hardship mods.
   - Instructions for finding and editing the `PATH` environment variable can be found [here](https://www.java.com/en/download/help/path.html)  
 - [Git](https://git-scm.com/downloads)
   - Edit the `PATH` environment variable and add the Git.exe install path as a new value
+- [Spriggit](https://github.com/Mutagen-Modding/Spriggit)
+	- Used to serialize and deserialize the ESM
+	- Instructions on usage are below
 
 ## End User Requirements
 
@@ -24,7 +27,14 @@ A framework for creating player hardship mods.
 ## Clone and Build
 Open terminal (e.g., PowerShell) and run the following commands:
 
-```bat
+```
+# Cloning the repo with the --recursive flag to init the submodules
 git clone https://github.com/Scrabx3/Adversity-Framework --recursive
-xmake
+cd Adversity-Framework
+
+# Building the xmake project
+xmake build
+
+# Building the ESM File
+Path/To/Spriggit.CLI.exe deserialize --InputPath res\ESM --OutputPath 'Adversity Framework.esm'
 ```

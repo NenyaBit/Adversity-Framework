@@ -9,12 +9,12 @@
                 commit = "f6251c012faabeb21d64f50a41e892e56993e77e",
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
-            version = "3.31.0-rc2"
+            version = "3.30.5"
         },
         ["directxmath#31fecfc4"] = {
             repo = {
                 branch = "master",
-                commit = "f6251c012faabeb21d64f50a41e892e56993e77e",
+                commit = "408de0af628f93adb3e17713e3f825730b5c6219",
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "2024.02"
@@ -22,7 +22,7 @@
         ["directxtk#31fecfc4"] = {
             repo = {
                 branch = "master",
-                commit = "f6251c012faabeb21d64f50a41e892e56993e77e",
+                commit = "408de0af628f93adb3e17713e3f825730b5c6219",
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "24.2.0"
@@ -38,7 +38,7 @@
         ["nlohmann_json#31fecfc4"] = {
             repo = {
                 branch = "master",
-                commit = "f6251c012faabeb21d64f50a41e892e56993e77e",
+                commit = "408de0af628f93adb3e17713e3f825730b5c6219",
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "v3.11.3"
@@ -46,7 +46,7 @@
         ["rapidcsv#31fecfc4"] = {
             repo = {
                 branch = "master",
-                commit = "f6251c012faabeb21d64f50a41e892e56993e77e",
+                commit = "408de0af628f93adb3e17713e3f825730b5c6219",
                 url = "https://github.com/xmake-io/xmake-repo.git"
             },
             version = "8.84"

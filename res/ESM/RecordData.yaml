@@ -1,0 +1,15 @@
+SpriggitSource:
+  PackageName: 0.36.14
+  Version: ''
+ModKey: Adversity Framework.esm
+GameRelease: SkyrimSE
+ModHeader:
+  Flags:
+  - Master
+  - Small
+  Author: DEFAULT
+  MasterReferences:
+  - Master: Skyrim.esm
+    FileSize: 0
+  INTV: 1
+  INCC: 2

@@ -1,0 +1,22 @@
+FormKey: 00082C:Adversity Framework.esm
+EditorID: Adv_StaggerEffect
+Name:
+  TargetLanguage: English
+  Value: Stagger
+Flags:
+- Detrimental
+- NoHitEvent
+- NoArea
+- HideInUI
+- PowerAffectsMagnitude
+Archetype:
+  MutagenObjectType: MagicEffectArchetype
+  Type: Stagger
+CastType: FireAndForget
+TargetType: Touch
+DualCastScale: 1
+CastingSoundLevel: Silent
+Sounds: []
+Description:
+  TargetLanguage: English
+  Value: ''
