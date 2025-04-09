@@ -1,7 +1,7 @@
 set_xmakever("2.9.5")
 
 -- Globals
-PROJECT_NAME = "AdversaryFramework"
+PROJECT_NAME = "AdversityFramework"
 
 -- Project
 set_project(PROJECT_NAME)
