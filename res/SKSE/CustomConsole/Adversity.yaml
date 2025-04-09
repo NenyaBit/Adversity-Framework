@@ -1,0 +1,38 @@
+name: adversity
+alias: adv
+script: Adv_Commands
+help: various utilities for adversity
+subs:
+  - name: add-variant
+    alias: av
+    func: AddVariant
+    help: add's the player's currently equipped clothing as a variant to an outfit file
+    args:
+      - name: context
+        type: string
+        required: true
+      - name: pack
+        type: string
+        required: true
+      - name: name
+        type: string
+        required: true
+      - name: severity
+        type: int
+        default: 1
+  - name: release
+    alias: r
+    func: Release
+    help: releases the adversity lock
+  - name: acquire
+    alias: l
+    func: Lock
+    help: acquires the adversity lock
+    args:
+      - name: context
+        type: string
+        required: true
+  - name: get-locker
+    alias: gl
+    func: GetLocker
+    help: gets the current lock acquirer

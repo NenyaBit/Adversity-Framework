@@ -1,0 +1,34 @@
+FormKey: 000806:Adversity Framework.esm
+EditorID: Adv_MovementUtils
+VirtualMachineAdapter:
+  Scripts:
+  - Name: Adv_MovementUtils
+    Properties:
+    - MutagenObjectType: ScriptObjectProperty
+      Name: MovementFaction
+      Object: 000805:Adversity Framework.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: PlayerRef
+      Object: 000014:Skyrim.esm
+  FileName: ''
+  Aliases:
+  - Property:
+      Name: ''
+      Object: 000806:Adversity Framework.esm
+      Alias: 0
+    Scripts:
+    - Name: Adv_MovementUtils_Player
+      Properties:
+      - MutagenObjectType: ScriptObjectProperty
+        Name: PlayerRef
+        Object: 000014:Skyrim.esm
+Flags:
+- StartGameEnabled
+- 0x10
+- RunOnce
+NextAliasID: 1
+Aliases:
+- Name: Player
+  Flags: []
+  ForcedReference: 000014:Skyrim.esm
+  VoiceTypes: Null

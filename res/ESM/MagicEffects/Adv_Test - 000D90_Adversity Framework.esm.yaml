@@ -1,0 +1,12 @@
+FormKey: 000D90:Adversity Framework.esm
+EditorID: Adv_Test
+Archetype:
+  MutagenObjectType: MagicEffectArchetype
+  ActorValue: Health
+CastType: Concentration
+DualCastScale: 1
+CastingSoundLevel: Normal
+Sounds: []
+Description:
+  TargetLanguage: English
+  Value: ''

@@ -1,0 +1,24 @@
+FormKey: 000800:Adversity Framework.esm
+EditorID: Adv_Collar
+VirtualMachineAdapter:
+  Scripts:
+  - Name: Adv_Collar
+    Properties:
+    - MutagenObjectType: ScriptObjectProperty
+      Name: ViolationReason
+      Object: 000D8B:Adversity Framework.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: ZapSpell
+      Object: 000D8F:Adversity Framework.esm
+    - MutagenObjectType: ScriptObjectProperty
+      Name: PlayerRef
+      Object: 000014:Skyrim.esm
+  Versioning:
+  - Break0
+  ExtraBindDataVersion: 0
+  FileName: ''
+Flags:
+- StartGameEnabled
+- 0x10
+- RunOnce
+NextAliasID: 0

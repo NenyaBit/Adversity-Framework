@@ -1,0 +1,14 @@
+FormKey: 001DB5:Adversity Framework.esm
+EditorID: Adv_Sync
+VirtualMachineAdapter:
+  Scripts:
+  - Name: Adv_Sync
+  Versioning:
+  - Break0
+  ExtraBindDataVersion: 0
+  FileName: ''
+Flags:
+- StartGameEnabled
+- 0x10
+- RunOnce
+NextAliasID: 0
