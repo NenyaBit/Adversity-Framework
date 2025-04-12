@@ -6,7 +6,6 @@ GameRelease: SkyrimSE
 ModHeader:
   Flags:
   - Master
-  - Small
   Author: DEFAULT
   MasterReferences:
   - Master: Skyrim.esm

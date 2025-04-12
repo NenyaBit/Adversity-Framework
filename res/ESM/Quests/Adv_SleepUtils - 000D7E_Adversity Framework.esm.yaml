@@ -5,20 +5,20 @@ VirtualMachineAdapter:
   - Name: Adv_SleepUtils
     Properties:
     - MutagenObjectType: ScriptObjectProperty
-      Name: WoozyGetUp
-      Object: 0CF2C6:Skyrim.esm
+      Name: GameHour
+      Object: 000038:Skyrim.esm
     - MutagenObjectType: ScriptObjectProperty
       Name: Marker
       Object: 00080A:Adversity Framework.esm
     - MutagenObjectType: ScriptObjectProperty
-      Name: GameHour
-      Object: 000038:Skyrim.esm
+      Name: PlayerRef
+      Object: 000014:Skyrim.esm
     - MutagenObjectType: ScriptObjectProperty
       Name: SleepyTimeFadeIn
       Object: 0F342B:Skyrim.esm
     - MutagenObjectType: ScriptObjectProperty
-      Name: PlayerRef
-      Object: 000014:Skyrim.esm
+      Name: WoozyGetUp
+      Object: 0CF2C6:Skyrim.esm
   Versioning:
   - Break0
   ExtraBindDataVersion: 0

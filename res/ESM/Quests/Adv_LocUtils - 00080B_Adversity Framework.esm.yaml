@@ -5,27 +5,6 @@ VirtualMachineAdapter:
   - Name: Adv_LocUtils
     Properties:
     - MutagenObjectType: ScriptObjectListProperty
-      Name: Holds
-      Objects:
-      - Name: ''
-        Object: 01676A:Skyrim.esm
-      - Name: ''
-        Object: 01676F:Skyrim.esm
-      - Name: ''
-        Object: 016770:Skyrim.esm
-      - Name: ''
-        Object: 01676E:Skyrim.esm
-      - Name: ''
-        Object: 01676D:Skyrim.esm
-      - Name: ''
-        Object: 016769:Skyrim.esm
-      - Name: ''
-        Object: 01676C:Skyrim.esm
-      - Name: ''
-        Object: 016772:Skyrim.esm
-      - Name: ''
-        Object: 01676B:Skyrim.esm
-    - MutagenObjectType: ScriptObjectListProperty
       Name: CrimeFactions
       Objects:
       - Name: ''
@@ -46,6 +25,27 @@ VirtualMachineAdapter:
         Object: 0267EA:Skyrim.esm
       - Name: ''
         Object: 02816F:Skyrim.esm
+    - MutagenObjectType: ScriptObjectListProperty
+      Name: Holds
+      Objects:
+      - Name: ''
+        Object: 01676A:Skyrim.esm
+      - Name: ''
+        Object: 01676F:Skyrim.esm
+      - Name: ''
+        Object: 016770:Skyrim.esm
+      - Name: ''
+        Object: 01676E:Skyrim.esm
+      - Name: ''
+        Object: 01676D:Skyrim.esm
+      - Name: ''
+        Object: 016769:Skyrim.esm
+      - Name: ''
+        Object: 01676C:Skyrim.esm
+      - Name: ''
+        Object: 016772:Skyrim.esm
+      - Name: ''
+        Object: 01676B:Skyrim.esm
     - MutagenObjectType: ScriptObjectProperty
       Name: PlayerRef
       Object: 000014:Skyrim.esm
