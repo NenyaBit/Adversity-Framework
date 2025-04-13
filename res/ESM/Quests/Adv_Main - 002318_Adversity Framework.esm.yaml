@@ -5,14 +5,14 @@ VirtualMachineAdapter:
   - Name: Adv_Main
     Properties:
     - MutagenObjectType: ScriptObjectProperty
+      Name: LicenseUtil
+      Object: 000802:Adversity Framework.esm
+    - MutagenObjectType: ScriptObjectProperty
       Name: SleepUtil
       Object: 000D7E:Adversity Framework.esm
     - MutagenObjectType: ScriptObjectProperty
       Name: Sync
       Object: 001DB5:Adversity Framework.esm
-    - MutagenObjectType: ScriptObjectProperty
-      Name: LicenseUtil
-      Object: 000802:Adversity Framework.esm
   FileName: ''
   Aliases:
   - Property:

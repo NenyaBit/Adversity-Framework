@@ -5,14 +5,14 @@ VirtualMachineAdapter:
   - Name: Adv_Collar
     Properties:
     - MutagenObjectType: ScriptObjectProperty
+      Name: PlayerRef
+      Object: 000014:Skyrim.esm
+    - MutagenObjectType: ScriptObjectProperty
       Name: ViolationReason
       Object: 000D8B:Adversity Framework.esm
     - MutagenObjectType: ScriptObjectProperty
       Name: ZapSpell
       Object: 000D8F:Adversity Framework.esm
-    - MutagenObjectType: ScriptObjectProperty
-      Name: PlayerRef
-      Object: 000014:Skyrim.esm
   Versioning:
   - Break0
   ExtraBindDataVersion: 0
