@@ -30,6 +30,7 @@ namespace Adversity
 
 				if (const auto ext = a.path().extension(); ext != ".yaml" && ext != ".yml") {
 					continue;
+				}
 
 				auto actual{ a.path().string() };
 
@@ -40,7 +41,7 @@ namespace Adversity
 				const auto filename{ a.path().filename().replace_extension().string() };
 
 				try {
-					const auto custom{ Replace(actual, ".yaml", ".custom.yaml") };
+					const auto custom{ Utility::Replace(actual, ".yaml", ".custom.yaml") };
 
 					const auto& path = fs::exists(custom) ? custom : actual;
 
@@ -48,7 +49,7 @@ namespace Adversity
 					
 					auto config = YAML::LoadFile(path);
 
-					const std::string id{ std::format("{}/{}", a_context, Utility::CastLowerfilename)) };
+					const std::string id{ std::format("{}/{}", a_context, Utility::CastLower(filename)) };
 					a_func(id, config.as<T>());
 					logger::info("loaded {} {} in {} successfully", a_type, filename, a_context);
 				} catch (const std::exception& e) {
@@ -72,5 +73,4 @@ namespace Adversity
 			}
 		}
 	};
-}
 }

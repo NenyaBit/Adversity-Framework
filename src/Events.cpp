@@ -76,7 +76,7 @@ void Events::Revert()
 
 Event* Events::GetById(std::string a_id)
 {
-	a_id = Utility::CastLowera_id);
+	a_id = Utility::CastLower(a_id);
 	return _events.count(a_id) ? &_events[a_id] : nullptr;
 }
 

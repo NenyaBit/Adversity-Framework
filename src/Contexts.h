@@ -19,7 +19,7 @@ namespace Adversity
 		static inline T GetValue(const std::string& a_id, const std::string& a_key, T a_default, bool a_persist)
 		{
 			std::unique_lock lock{ _mutex };
-			const auto& id = Utility::CastLowera_id);
+			const auto& id = Utility::CastLower(a_id);
 
 			if (!a_persist) {
 				const auto iter = _runtime.find(id);
@@ -54,7 +54,7 @@ namespace Adversity
 		static inline bool SetValue(const std::string& a_id, const std::string& a_key, T a_val, bool a_persist)
 		{
 			std::unique_lock lock{ _mutex };
-			const auto id = Utility::CastLowera_id);
+			const auto id = Utility::CastLower(a_id);
 
 			if (!_dirty.count(id))
 				return false;

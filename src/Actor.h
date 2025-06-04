@@ -37,7 +37,7 @@ namespace YAML
 	{
 		static bool decode(const Node& node, AttachedTrait& rhs)
 		{
-			rhs.id = Utility::CastLowernode["id"].as<std::string>());
+			rhs.id = Utility::CastLower(node["id"].as<std::string>());
 			rhs.rank = node["rank"].as<int8_t>(0);
 
 			return true;

@@ -53,7 +53,7 @@ namespace Adversity
 			if (_id.empty()) {
 				_context = a_context;
 				_packId = a_pack;
-				_id = std::format("{}/{}", a_pack, Utility::CastLower_name));
+				_id = std::format("{}/{}", a_pack, Utility::CastLower(_name));
 			}
 
 			InitConditions(_rawConditions, a_refMap);

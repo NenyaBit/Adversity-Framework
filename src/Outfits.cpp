@@ -42,7 +42,7 @@ void Outfits::Reload(std::string a_context, std::string a_pack, std::string a_na
 
 	logger::info("{}/{}/{} file - {}", a_context, a_pack, a_name, file);
 
-	const std::string id{ std::format("{}/{}", a_context, Utility::CastLowera_name)) };
+	const std::string id{ std::format("{}/{}", a_context, Utility::CastLower(a_name)) };
 	auto config = YAML::LoadFile(file);
 	Load(id, config.as<Outfit>());
 }
@@ -55,19 +55,19 @@ Outfit* Outfits::GetOutfit(std::string a_context, std::string a_name)
 
 Outfit* Outfits::GetOutfit(std::string a_id)
 {
-	a_id = Utility::CastLowera_id);
+	a_id = Utility::CastLower(a_id);
 	return _outfits.count(a_id) ? &_outfits[a_id] : nullptr;
 }
 
 Variant* Outfits::GetVariant(std::string a_id)
 {
-	a_id = Utility::CastLowera_id);
+	a_id = Utility::CastLower(a_id);
 	return _variants.count(a_id) ? &_variants[a_id] : nullptr;
 }
 
 Variant* Outfits::GetNextOutfit(std::string a_variant, int a_targetSeverity)
 {
-	a_variant = Utility::CastLowera_variant);
+	a_variant = Utility::CastLower(a_variant);
 
 	logger::info("GetNextOutfit - {}", a_variant);
 
