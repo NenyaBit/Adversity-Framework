@@ -121,7 +121,7 @@ namespace Adversity::Papyrus
 			logger::error("no weights provided");
 			return -1;
 		}
-		return Utility::Random::draw{ a_weights.begin(), a_weights.end() };
+		return Utility::Random::drawWeighted(a_weights);
 	}
 
 	std::vector<std::string> FilterByPrefix(RE::StaticFunctionTag*, std::vector<std::string> a_strs, std::string a_prefix)
@@ -131,8 +131,11 @@ namespace Adversity::Papyrus
 
 	std::vector<std::string> RemovePrefix(RE::StaticFunctionTag*, std::vector<std::string> a_strs, std::string a_prefix)
 	{
-		std::erase_if(a_strs.begin(), a_strs.end(), [&a_prefix, len](std::string a_str) { return !a_str.starts_with(a_prefix); });
-		return a_strs;
+		std::vector<std::string> transform;
+		std::transform(a_strs.begin(), a_strs.end(), std::back_inserter(transform), [&a_prefix](std::string a_str) {
+			return Utility::RemovePrefix(a_str, a_prefix);
+		});
+		return transform;
 	}
 
 	std::vector<RE::TESObjectARMO*> GetDevicesByKeyword(RE::StaticFunctionTag*, std::string a_context, RE::Actor* a_actor, RE::BGSKeyword* a_kwd)

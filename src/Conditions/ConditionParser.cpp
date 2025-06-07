@@ -7,7 +7,7 @@ using namespace Conditions;
 
 auto ConditionParser::Parse(std::string_view a_text, const RefMap& a_refs) -> RE::TESConditionItem*
 {
-	const auto splits = Utility::StringSplit(a_text, "<>"sv) | std::ranges::views::transform([](std::string& a_str) {
+	const auto splits = Utility::StringSplitToOwned(a_text, "<>"sv) | std::ranges::views::transform([](std::string& a_str) {
 		while (!a_str.empty() && std::isspace(a_str.front())) {
 			a_str.erase(a_str.begin());
 		}

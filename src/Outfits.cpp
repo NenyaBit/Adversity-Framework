@@ -3,7 +3,7 @@
 #include "Events.h"
 #include "Packs.h"
 #include "Util.h"
-#include "Utility/Random.h"
+#include "Util/Random.h"
 
 using namespace Adversity;
 
@@ -86,7 +86,7 @@ Variant* Outfits::GetNextOutfit(std::string a_variant, int a_targetSeverity)
 
 		std::vector<Variant*> candidates;
 
-		auto splits = Utility::StringSplit(a_variant, "/");
+		auto splits = Utility::StringSplitToOwned(a_variant, "/");
 		splits.pop_back();
 		if (const auto outfit = GetOutfit(Utility::StringJoin(splits, "/"))) {
 			for (auto& var : outfit->variants) {
@@ -105,7 +105,7 @@ Variant* Outfits::GetNextOutfit(std::string a_variant, int a_targetSeverity)
 		if (candidates.empty())
 			return nullptr;
 
-		return candidates[Utility::Random::draw<size_t>(0, candidates.size() - 1)];
+		return candidates[Utility::Random::drawUniform<size_t>(0, candidates.size() - 1)];
 	}
 
 	return nullptr;
