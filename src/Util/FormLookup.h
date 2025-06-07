@@ -1,13 +1,21 @@
 #pragma once
 
+#include <string_view>
+
 namespace Utility
 {
-	static inline RE::FormID FormFromString(const std::string_view& a_string, size_t base)
+
+	static inline bool HasHexPrefix(const std::string_view& a_string)
+	{
+		return a_string.size() > 1 && (a_string[0] == '0' && (a_string[1] == 'x' || a_string[1] == 'X'));
+	}
+	
+	static inline RE::FormID FormFromString(const std::string_view& a_string, int base)
 	{
 		const auto split = a_string.find('|');
 		const auto formIdStr = a_string.substr(0, split);
 		RE::FormID formid;
-		const auto offset = a_string.starts_with("0x") ? 2 : 0;
+		const auto offset = HasHexPrefix(a_string) ? 2 : 0;
 		const auto [ptr, res] = std::from_chars(
 				formIdStr.data() + offset,
 				formIdStr.data() + formIdStr.size(),
@@ -22,31 +30,41 @@ namespace Utility
 		}
 	}
 
-	template <typename T, std::enable_if_t<std::is_pointer<T>::value> = false>
-	static inline T* FormFromString(const std::string_view& a_string, size_t base)
+	static inline RE::FormID FormFromString(const std::string_view& a_string)
+	{
+		const auto base = HasHexPrefix(a_string) ? 16 : 10;
+		return FormFromString(a_string, base);
+	}
+
+	template <typename T, typename = std::enable_if_t<!std::is_pointer_v<T>>>
+	static inline T* FormFromString(const std::string_view& a_string, int base)
 	{
 		const auto id = FormFromString(a_string, base);
 		return id == 0 ? nullptr : RE::TESForm::LookupByID<T>(id);
 	}
 
-	template <typename T>
-	static inline T FormFromString(const std::string_view& a_string, size_t base)
+	template <typename T, typename = std::enable_if_t<!std::is_pointer_v<T>>>
+	static inline T* FormFromString(const std::string_view& a_string)
+	{
+		const auto base = HasHexPrefix(a_string) ? 16 : 10;
+		return FormFromString<T>(a_string, base);
+	}
+
+	template <typename T, typename = std::enable_if_t<std::is_pointer<T>::value>>
+	static inline T FormFromString(const std::string_view& a_string, int base)
 	{
 		using U = std::remove_pointer<T>::type;
 		return FormFromString<U>(a_string, base);
 	}
 
-	template <typename T>
+	template <typename T, typename = std::enable_if_t<std::is_pointer<T>::value>>
 	static inline T FormFromString(const std::string_view& a_string)
 	{
-		if (a_string.starts_with("0x")) {
-			return FormFromString<T>(a_string.substr(2), 16);
-		} else {
-			return FormFromString<T>(a_string, 10);
-		}
-	}
+		using U = std::remove_pointer<T>::type;
+		return FormFromString<U>(a_string);
+	}	
 
-	static std::string FormToString(RE::TESForm* a_form)
+	static inline std::string FormToString(RE::TESForm* a_form)
 	{
 		auto file = a_form->GetFile(0);
 		if (!file) {
