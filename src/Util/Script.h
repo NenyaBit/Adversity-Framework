@@ -5,6 +5,7 @@ namespace Script
 	using VM = RE::BSScript::Internal::VirtualMachine;
 	using ObjectPtr = RE::BSTSmartPointer<RE::BSScript::Object>;
 	using ArrayPtr = RE::BSTSmartPointer<RE::BSScript::Array>;
+	using TypePtr = RE::BSTSmartPointer<RE::BSScript::ObjectTypeInfo>;
 	using CallbackPtr = RE::BSTSmartPointer<RE::BSScript::IStackCallbackFunctor>;
 	using Args = RE::BSScript::IFunctionArguments;
 	using RawType = RE::BSScript::TypeInfo::RawType;
@@ -39,7 +40,7 @@ namespace Script
 		return RE::BSScript::UnpackValue<T>(var);
 	}
 
-	template <class T, std::enable_if_t<std::is_integral_v<T> || std::is_floating_point_v<T>> = true>
+	template <class T, typename = std::enable_if_t<std::is_integral_v<T> || std::is_floating_point_v<T>>>
 	inline T GetTrivialProperty(ObjectPtr a_obj, const RE::BSFixedString& a_prop)
 	{
 		const auto var = a_obj->GetProperty(a_prop);
